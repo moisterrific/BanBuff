@@ -12,7 +12,7 @@ using Koishi.BanBuff.Commands;
 
 namespace Koishi.BanBuff
 {
-    [ApiVersion(2, 0)]
+    [ApiVersion(2, 1)]
     public class BanBuffPlugin : TerrariaPlugin
     {
         public static BuffManager BuffManager;
