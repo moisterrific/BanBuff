@@ -29,7 +29,6 @@ namespace Koishi.BanBuff.Commands
             string buffName = args.Parameters[1];
 
             List<int> buffByIdOrName = Utils.GetBuffByIdOrName(buffName);
-
             if (buffByIdOrName.Count == 0)
             {
                 args.Player.SendErrorMessage("Invalid buff - {0}.", buffName);
@@ -37,10 +36,9 @@ namespace Koishi.BanBuff.Commands
             }
             else if (buffByIdOrName.Count > 1)
             {
-                TShock.Utils.SendMultipleMatchError(args.Player, buffByIdOrName.Select(x => Utils.Name(x)));
+                args.Player.SendMultipleMatchError(buffByIdOrName.Select(x => Utils.Name(x)));
                 return;
             }
-
             _buffManager.AddNewBan(buffByIdOrName[0]);
             args.Player.SendSuccessMessage("Banned {0}.", Utils.Name(buffByIdOrName[0]));
         }

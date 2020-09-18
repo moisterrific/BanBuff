@@ -35,7 +35,7 @@ namespace Koishi.BanBuff.Commands
             }
             else if (buffByIdOrName.Count > 1)
             {
-                TShock.Utils.SendMultipleMatchError(args.Player, buffByIdOrName.Select(x => Utils.Name(x)));
+                args.Player.SendMultipleMatchError(buffByIdOrName.Select(x => Utils.Name(x)));
                 return;
             }
 

@@ -35,7 +35,7 @@ namespace Koishi.BanBuff.Commands
             }
             if (nums.Count > 1)
             {
-                TShock.Utils.SendMultipleMatchError(args.Player, nums.Select(i => Utils.Name(i)));
+                args.Player.SendMultipleMatchError(nums.Select(i => Utils.Name(i)));
                 return;
             }
 

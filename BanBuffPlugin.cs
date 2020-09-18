@@ -53,31 +53,7 @@ namespace Koishi.BanBuff
 
         public BanBuffPlugin(Main game) : base(game)
         {
-            base.Order = 1;
-            {
-                IChatCommand cmd = new AddCommand(BuffManager);
-                _commandDict.Add(cmd.Command.ToLower(), cmd);
-            }
-            {
-                IChatCommand cmd = new AllowCommand(BuffManager);
-                _commandDict.Add(cmd.Command.ToLower(), cmd);
-            }
-            {
-                IChatCommand cmd = new DelCommand(BuffManager);
-                _commandDict.Add(cmd.Command.ToLower(), cmd);
-            }
-            {
-                IChatCommand cmd = new DisallowCommand(BuffManager);
-                _commandDict.Add(cmd.Command.ToLower(), cmd);
-            }
-            {
-                IChatCommand cmd = new ListCommand(BuffManager);
-                _commandDict.Add(cmd.Command.ToLower(), cmd);
-            }
-            {
-                IChatCommand cmd = new HelpCommand(_commandDict);
-                _commandDict.Add(cmd.Command.ToLower(), cmd);
-            }
+            base.Order = 8;
         }
 
         private void OnChatCommand(CommandArgs args)
@@ -101,6 +77,30 @@ namespace Koishi.BanBuff
             TShockAPI.Commands.ChatCommands.Add(new Command("komeiji.banbuff", OnChatCommand, "banbuff", "buffban"));
             BuffManager = new BuffManager(TShock.DB);
             ServerApi.Hooks.NetGetData.Register(this, new HookHandler<GetDataEventArgs>(OnGetData));
+            {
+                IChatCommand cmd = new AddCommand(BuffManager);
+                _commandDict.Add(cmd.Command.ToLower(), cmd);
+            }
+            {
+                IChatCommand cmd = new AllowCommand(BuffManager);
+                _commandDict.Add(cmd.Command.ToLower(), cmd);
+            }
+            {
+                IChatCommand cmd = new DelCommand(BuffManager);
+                _commandDict.Add(cmd.Command.ToLower(), cmd);
+            }
+            {	
+                IChatCommand cmd = new DisallowCommand(BuffManager);
+                _commandDict.Add(cmd.Command.ToLower(), cmd);
+            }
+            {
+                IChatCommand cmd = new ListCommand(BuffManager);
+                _commandDict.Add(cmd.Command.ToLower(), cmd);
+            }
+            {
+                IChatCommand cmd = new HelpCommand(_commandDict);
+                _commandDict.Add(cmd.Command.ToLower(), cmd);
+            }
         }
 
         private void OnGetData(GetDataEventArgs args)
@@ -116,10 +116,10 @@ namespace Koishi.BanBuff
                             TSPlayer player = TShock.Players[args.Msg.whoAmI];
                             for (int i = 0; i < 22; i++)
                             {
-                                byte num = binaryReader.ReadByte();
+                                ushort num = binaryReader.ReadUInt16();
                                 if (BuffManager.BuffIsBanned(num, player))
                                 {
-                                    TShock.Utils.ForceKick(player, string.Concat("Has Banned Buff", Utils.Name(num)), false, true);
+                                    player.Kick(string.Concat("Has Banned Buff: ", Utils.Name(num)), false, true);
                                 }
                             }
                         }
@@ -131,12 +131,11 @@ namespace Koishi.BanBuff
                         using (BinaryReader binaryReader = new BinaryReader(memoryStream, Encoding.UTF8, true))
                         {
                             binaryReader.ReadByte();
-                            int num = binaryReader.ReadByte();
-                            binaryReader.ReadInt16();
+                            int num = binaryReader.ReadUInt16();
                             TSPlayer player = TShock.Players[args.Msg.whoAmI];
                             if (BuffManager.BuffIsBanned(num, player))
                             {
-                                TShock.Utils.ForceKick(player, string.Concat("Has Banned Buff", Utils.Name(num)), false, true);
+                                player.Kick(string.Concat("Has Banned Buff: ", Utils.Name(num)), false, true);
                             }
                         }
                     }
