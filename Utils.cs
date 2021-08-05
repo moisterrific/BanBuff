@@ -333,8 +333,11 @@ namespace Koishi.BanBuff
 				"MaceWhipNPCDebuff",
 				"Sparkle Slime",
 				"Cerebral Mindtrick",
-				"Terraprisma"
-
+				"Terraprisma",
+				"Hellfire",
+				"Frostbite",
+				"Flinx",
+				"Bone Whip"
 			};
 		}
 
